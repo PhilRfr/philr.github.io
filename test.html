@@ -1,0 +1,41 @@
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.3/dist/JsBarcode.all.min.js"></script>
+</head>
+<body>
+    <svg id="barcode"></svg><br>
+    <input id="end" value="50309">
+    <button id="nouveau">Nouveau !</button><br>
+    <span id="value"></span>
+<script language="JavaScript">
+    function getRandomStringOfLength(len){
+        var string = "";
+        for (let index = 0; index < len; index++)
+            string += Math.round(Math.random()*10);
+        return string;
+    }
+    function twoDigits(number){
+        return number.toLocaleString(undefined, {minimumIntegerDigits: 2});
+    }
+    function newBarCode(end_with){
+        var now = new Date();
+        var code = "";
+        code += now.getFullYear();
+        code += now.getMonth();
+        code += now.getDay();
+        code += now.getHours();
+        code += now.getMinutes();
+        code += now.getSeconds();
+        var suffix = getRandomStringOfLength(10 - end_with.length) + end_with;
+        code += suffix;
+        JsBarcode("#barcode", code);
+        document.getElementById("value").innerText = code;
+    }
+    let input = document.getElementById("end");
+    document.getElementById("nouveau").addEventListener("click", function(){
+        newBarCode(input.value);
+    });
+</script>
+</body>
+</html>
